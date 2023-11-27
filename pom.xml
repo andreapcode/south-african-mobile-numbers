@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>south-african-numbers</artifactId>
+	<artifactId>south-african-mobile-numbers</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>south-african-numbers</name>
 	<description>South African Numbers App</description>
