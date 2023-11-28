@@ -20,7 +20,4 @@ public interface PhoneNumberService {
     List<PhoneNumber> findByStatus(String status);
 
     PhoneNumber findByPhoneNumber(String phoneNumber);
-
-    List<PhoneNumber> download();
-
 }

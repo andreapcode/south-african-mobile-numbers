@@ -6,6 +6,7 @@ import com.south.african.numbers.app.model.Status;
 import com.south.african.numbers.app.model.StatusEnum;
 import com.south.african.numbers.app.repository.PhoneNumberRepository;
 import com.south.african.numbers.app.service.PhoneNumberService;
+import com.south.african.numbers.app.utils.TestUtils;
 import com.south.african.numbers.app.utils.constant.Constant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -51,10 +52,8 @@ public class PhoneNumberControllerTest {
         MockMultipartFile file = new MockMultipartFile(
                 "file", "test.csv", "text/csv", uploadFile.getInputStream());
 
-        when(databaseStoreRepository.saveAll(Mockito.anyList())).thenReturn(createPhoneNumberEntityList());
-
-        //when(databaseStoreRepository.saveAll(createPhoneNumberEntityList())).thenReturn(createPhoneNumberEntityList());
-
+        when(databaseStoreRepository.saveAll(Mockito.anyList())).thenReturn(TestUtils.createPhoneNumberEntityList());
+        
         MvcResult result = mockMvc.perform(multipart("/v1.0/south-african-number/phone-numbers")
                         .file(file)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
@@ -87,7 +86,7 @@ public class PhoneNumberControllerTest {
     @Test
     void findAllPhoneNumbers() throws Exception {
 
-        mockDatabaseStoreRepositoryFindAll(createPhoneNumberEntityList());
+        when(databaseStoreRepository.findAllByOrderByStatusAsc()).thenReturn(TestUtils.createPhoneNumberEntityList());
 
         String phoneNumberMocked = "{\"phoneNumbers\":[{\"id\":\"103427070\",\"phoneNumber\":\"27714322560\",\"status\":{\"code\":\"ACCEPTED\",\"description\":\"Phone Number Accepted\"}}],\"message\":null}";
 
@@ -100,12 +99,26 @@ public class PhoneNumberControllerTest {
     }
 
     @Test
+    void emptyPhoneNumberList() throws Exception {
+
+
+        String responseMessage = "{\"phoneNumbers\":[],\"message\":\"The phone number list is empty\"}";
+
+
+        MvcResult result = mockMvc.perform(get("/v1.0/south-african-number/phone-numbers"))
+                .andExpect(status().isOk()).andReturn();
+
+
+        assertEquals(responseMessage, result.getResponse().getContentAsString());
+    }
+
+    @Test
     void findPhoneNumbersByStatus() throws Exception {
 
 
         String phoneNumberMocked = "{\"phoneNumbers\":[{\"id\":\"103427070\",\"phoneNumber\":\"27714322560\",\"status\":{\"code\":\"ACCEPTED\",\"description\":\"Phone Number Accepted\"}}],\"message\":null}";
 
-        when(databaseStoreRepository.findByStatus(StatusEnum.ACCEPTED.getCode())).thenReturn(createPhoneNumberEntityList());
+        when(databaseStoreRepository.findByStatus(StatusEnum.ACCEPTED.getCode())).thenReturn(TestUtils.createPhoneNumberEntityList());
 
 
         MvcResult result = mockMvc.perform(get("/v1.0/south-african-number/phone-numbers/status/{status}", StatusEnum.ACCEPTED.getCode()))
@@ -114,6 +127,25 @@ public class PhoneNumberControllerTest {
 
 
         assertEquals(phoneNumberMocked, result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void findPhoneNumbersByWrongStatus() throws Exception {
+
+
+        String messageResponse = "{\"phoneNumbers\":[],\"message\":\"The phone number list is empty\"}";
+
+        List<PhoneNumberEntity> phoneNumberEntities = new ArrayList<>();
+        String wrongStatus = "TEST_STATUS";
+        when(databaseStoreRepository.findByStatus(wrongStatus)).thenReturn(phoneNumberEntities);
+
+
+        MvcResult result = mockMvc.perform(get("/v1.0/south-african-number/phone-numbers/status/{status}", StatusEnum.ACCEPTED.getCode()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        assertEquals(messageResponse, result.getResponse().getContentAsString());
     }
 
 
@@ -136,27 +168,5 @@ public class PhoneNumberControllerTest {
     }
 
 
-    private void mockDatabaseStoreRepositoryFindAll(List<PhoneNumberEntity> phoneNumberEntities) {
-        when(databaseStoreRepository.findAllByOrderByStatusAsc()).thenReturn(phoneNumberEntities);
-    }
-
-    private List<PhoneNumberEntity> createPhoneNumberEntityList() {
-        List<PhoneNumberEntity> phoneNumberEntities = new ArrayList<>();
-        PhoneNumberEntity phoneNumberEntity = new PhoneNumberEntity("103427070", "27714322560", StatusEnum.ACCEPTED.getCode(),
-                StatusEnum.ACCEPTED.getDescription());
-        phoneNumberEntities.add(phoneNumberEntity);
-
-        return phoneNumberEntities;
-    }
-
-    private List<PhoneNumber> createPhoneNumberList() {
-        List<PhoneNumber> phoneNumberList = new ArrayList<>();
-        PhoneNumber phoneNumber = new PhoneNumber("103427070", "27714322560", new Status(StatusEnum.ACCEPTED.getCode(), StatusEnum.ACCEPTED.getDescription()));
-        phoneNumberList.add(phoneNumber);
-
-        return phoneNumberList;
-    }
-    private  String PHONE_NUMBER_ENTITY_MOCKED = "\"id\",\"sms_phone\",\"status\"," +
-            "\"\"\n\"1\",\"27831234567\",\"ACCEPTED\",\"\"\n";
 
 }

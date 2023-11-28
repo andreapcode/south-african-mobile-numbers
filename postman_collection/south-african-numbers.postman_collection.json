@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "4d759736-117f-462d-9f15-dbc8f5ba6dc2",
+		"name": "south-african-numbers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31338798"
+	},
+	"item": [
+		{
+			"name": "saveAllPhoneNumbers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/Interlogica_Project/south-african-numbers/src/main/resources/Interlogica_Test Pre-selezione. South_African_Mobile_Numbers.csv"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/v1.0/south-african-number/phone-numbers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1.0",
+						"south-african-number",
+						"phone-numbers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllPhoneNumbers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/v1.0/south-african-number/phone-numbers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1.0",
+						"south-african-number",
+						"phone-numbers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findPhoneNumbersByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/v1.0/south-african-number/phone-numbers/status/ACCEPTED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1.0",
+						"south-african-number",
+						"phone-numbers",
+						"status",
+						"ACCEPTED"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findPhoneNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/v1.0/south-african-number/phone-number/12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"v1.0",
+						"south-african-number",
+						"phone-number",
+						"12345"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

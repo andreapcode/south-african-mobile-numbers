@@ -1,6 +1,7 @@
 package com.south.african.numbers.app.configuration;
 
 
+import com.south.african.numbers.app.utils.constant.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -9,11 +10,11 @@ import io.swagger.v3.oas.models.info.Info;
 @Configuration
 public class OpenApiConfig {
     @Bean
-    public OpenAPI usersMicroserviceOpenAPI() {
+    public OpenAPI config() {
         return new OpenAPI()
-                .info(new Info().title("South African Phone Numbers")
-                        .description("App for saving, correcting, and managing South African phone numbers")
-                        .version("1.0"));
+                .info(new Info().title(Constant.Config.TITLE)
+                        .description(Constant.Config.DESCRIPTION)
+                        .version(Constant.Config.V_1));
     }
 }
 

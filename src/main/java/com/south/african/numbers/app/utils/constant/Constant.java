@@ -51,4 +51,13 @@ public class Constant {
 
         public static final String SAVE_MESSAGE = " south african phone numbers have been saved";
     }
+
+    public static final class Config {
+
+        public static final String TITLE = "South African Mobile Phone Numbers";
+
+        public static final String DESCRIPTION = "App for saving, correcting, and managing South African phone numbers";
+
+        public static final String V_1 = "1.0";
+    }
 }

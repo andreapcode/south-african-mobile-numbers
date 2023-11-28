@@ -75,9 +75,5 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
 
-    @Override
-    public List<PhoneNumber> download() {
-        return null;
-    }
 
 }
