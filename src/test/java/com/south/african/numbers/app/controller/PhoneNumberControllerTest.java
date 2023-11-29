@@ -42,8 +42,6 @@ public class PhoneNumberControllerTest {
     PhoneNumberRepository databaseStoreRepository;
 
 
-
-
     @Test
     void uploadFileAndSavePhoneNumbers() throws Exception {
 
@@ -53,13 +51,32 @@ public class PhoneNumberControllerTest {
                 "file", "test.csv", "text/csv", uploadFile.getInputStream());
 
         when(databaseStoreRepository.saveAll(Mockito.anyList())).thenReturn(TestUtils.createPhoneNumberEntityList());
-        
+
         MvcResult result = mockMvc.perform(multipart("/v1.0/south-african-number/phone-numbers")
                         .file(file)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isCreated()).andReturn();
 
         String message = "{\"message\":\"1 south african phone numbers have been saved\"}";
+
+        assertEquals(message, result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void uploadWrongKeyFileName() throws Exception {
+
+        ClassPathResource uploadFile = new ClassPathResource("");
+
+        MockMultipartFile file = new MockMultipartFile(
+                "test", "test.csv", "text/csv", uploadFile.getInputStream());
+
+
+        MvcResult result = mockMvc.perform(multipart("/v1.0/south-african-number/phone-numbers")
+                        .file(file)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isBadRequest()).andReturn();
+
+        String message = "{\"code\":\"400 Bad Request\",\"message\":\"The file is a required field and cannot be null\"}";
 
         assertEquals(message, result.getResponse().getContentAsString());
     }
