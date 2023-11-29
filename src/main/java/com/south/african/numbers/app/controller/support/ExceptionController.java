@@ -1,9 +1,6 @@
 package com.south.african.numbers.app.controller.support;
 
-import com.south.african.numbers.app.exception.ErrorEnum;
-import com.south.african.numbers.app.exception.ErrorResult;
-import com.south.african.numbers.app.exception.FileException;
-import com.south.african.numbers.app.exception.UnsupportedFileFormatException;
+import com.south.african.numbers.app.exception.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -51,6 +48,16 @@ public class ExceptionController {
         return ErrorResult.builder()
                 .code(ErrorEnum.ERROR_400.getCode())
                 .message(e.getMessage())
+                .build();
+    }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(InvalidInputException.class)
+    public ErrorResult invalidInputException(InvalidInputException e) {
+
+        return ErrorResult.builder()
+                .code(e.getError().getCode())
+                .message(e.getError().getMessage())
                 .build();
     }
 
