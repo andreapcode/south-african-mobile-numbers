@@ -56,7 +56,7 @@ A Postman collection(./postman_collection/south-african-numbers.postman_collecti
 ### POST
 ### saveAllPhoneNumbers:
 
-Insert the CSV file (./src/main/resources/Interlogica_Test Pre-selection. South_African_Mobile_Numbers.csv) in the Body -> form-data section, putting the value "file" in the Key and the file in the Value field.
+Insert the CSV file (./src/main/resources/Interlogica_Test Pre-selection. South_African_Mobile_Numbers.csv) in the Body -> form-data section, putting the value "file" in the Key (change the type in the drop-down menu from "Text" to "File") and the file in the Value field.
 
 
 ### GET
