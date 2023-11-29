@@ -20,9 +20,17 @@ This project is a Spring Boot application that validates and inserts South Afric
    ```bash
     mvn clean install
 
+
+## Running the Application
+After building the project, you can run the Spring Boot application with the following command:
+
+```bash
+    mvn spring-boot:run
+```
+
 ### H2 Database Configuration
 
-The project uses H2 as an in-memory database. 
+The project uses H2 as an in-memory database.
 
 You can access the H2 console during development. After starting the application, you can access http://localhost:8081/h2-console with the following credentials:
 
@@ -32,19 +40,11 @@ User Name: admin
 
 Password:  admin
 
-## Running the Application
-After building the project, you can run the Spring Boot application with the following command:
-
-```bash
-    mvn spring-boot:run
-```
-
-
 ### Using the API with Swagger
 
 You can use the Swagger API documentation to validate and insert South African phone numbers. 
 
-The Swagger UI is available at http://localhost:8180/swagger-ui.html
+The Swagger UI is available at http://localhost:8081/swagger-ui.html
 
 
 ## API Endpoints
